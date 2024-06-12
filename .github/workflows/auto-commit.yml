@@ -1,27 +1,13 @@
-name: Auto Commit on Push
-
-on:
-  push:
-    branches:
-      - master
-
+name: Aprendiendo GitHub Actions
+run-name: ¡Estoy aprendiendo GitHub Actions!
+on: [push]
 jobs:
-  auto_commit:
+  hola-mundo:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create new commit
-        run: |
-          echo "Auto-commit by GitHub Actions" >> auto_commit.txt
-          git add auto_commit.txt
-          git commit -m "Auto-commit: Add auto_commit.txt"
-      
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Definir variable
+        run: echo "USERNAME=${{ github.actor }}" >> $GITHUB_ENV
+      - name: Correr script
+        run: python hola_mundo.py

@@ -11,11 +11,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Set up Git
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email "nelson.leonardo.cubillos@gmail.com"  # Cambia por tu dirección de correo
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # Puedes ajustar la versión de Node.js según tus necesidades
 
       - name: Create new commit
         run: |
@@ -28,4 +30,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
-

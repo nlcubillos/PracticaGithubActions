@@ -1,0 +1,31 @@
+name: Auto Commit on Push
+
+on:
+  push:
+    branches:
+      - master  # Cambia 'main' por el nombre de tu rama principal si es diferente
+
+jobs:
+  auto_commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Set up Git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "nelson.leonardo.cubillos@gmail.com"  # Cambia por tu dirección de correo
+
+      - name: Create new commit
+        run: |
+          echo "Auto-commit by GitHub Actions" >> auto_commit.txt
+          git add auto_commit.txt
+          git commit -m "Auto-commit: Add auto_commit.txt"
+      
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+
